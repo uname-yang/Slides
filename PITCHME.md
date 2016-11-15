@@ -18,14 +18,17 @@ Docker containers wrap a piece of software in a complete filesystem that contain
 
 #HSLIDE
 * LIGHTWEIGHT
+
 Containers running on a single machine share the same operating system kernel; they start instantly and use less RAM. Images are constructed from layered filesystems and share common files, making disk usage and image downloads much more efficient.
 
 #VSLIDE
 * OPEN
+
 Docker containers are based on open standards, enabling containers to run on all major Linux distributions and on Microsoft Windows -- and on top of any infrastructure.
 
 #VSLIDE
 * SECURE BY DEFAULT
+
 Containers isolate applications from one another and the underlying infrastructure, while providing an added layer of protection for the application.
 
 #HSLIDE
@@ -102,12 +105,16 @@ Kitematic is a simple application for managing Docker containers on Mac, Linux a
 
 #VSLIDE
 * VIRTUAL MACHINES
+
 Virtual machines include the application, the necessary binaries and libraries, and an entire guest operating system -- all of which can amount to tens of GBs.
-* CONTAINERS
-Containers include the application and all of its dependencies --but share the kernel with other containers, running as isolated processes in user space on the host operating system. Docker containers are not tied to any specific infrastructure: they run on any computer, on any infrastructure, and in any cloud.
 
 #VSLIDE
 ![pic](images/20161114001.png)
+
+#VSLIDE
+* CONTAINERS
+
+Containers include the application and all of its dependencies --but share the kernel with other containers, running as isolated processes in user space on the host operating system. Docker containers are not tied to any specific infrastructure: they run on any computer, on any infrastructure, and in any cloud.
 
 #VSLIDE
 ![pic](images/20161114002.png)
