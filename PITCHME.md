@@ -83,6 +83,9 @@ This repository's main product is the Docker Registry 2.0 implementation for sto
 #VSLIDE
 
 Machine lets you create Docker hosts on your computer, on cloud providers, and inside your own data center. It creates servers, installs Docker on them, then configures the Docker client to talk to them.
+```
+$ docker-machine create -d virtualbox default
+```
 
 #HSLIDE
 ### Swarm: a Docker-native clustering system
