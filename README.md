@@ -12,7 +12,7 @@ Docker is the world's leading software containerization platform
 
 >PACKAGE YOUR APPLICATION INTO A STANDARDIZED UNIT FOR SOFTWARE DEVELOPMENT
 
-Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run: code, runtime, system tools, system libraries â€“ anything that can be installed on a server. This guarantees that the software will always run the same, regardless of its environment.
+Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run: code, runtime, system tools, system libraries and anything that can be installed on a server. This guarantees that the software will always run the same, regardless of its environment.
 
 ---
 
@@ -140,7 +140,7 @@ $ docker run -it ubuntu /bin/bash
 
 ### Images
 * Read only template used to create containers
-* Buuilt by you or other Docker users
+* Built by you or other Docker users
 * Stored in  the Docker Hub or your local Registry
 
 ---
@@ -178,7 +178,7 @@ $ docker start [c]
 $ docker stop [c]
 $ docker inspect [c]
 $ docker top [c]
-$ docker log [c]
+$ docker logs [c]
 ```
 ---
 ```
