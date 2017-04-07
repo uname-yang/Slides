@@ -17,10 +17,10 @@ Similarly, `data` within Kafka is stored **durably**, **in order**, and can be *
 
 Kafka has four core APIs:
 
-* The `Producer API` allows an application to `publish` a stream of records `to` one or more Kafka `topics`.
-* The `Consumer API` allows an application to `subscribe to` one or more `topics` and `process` the stream of `records` produced to them.
-* The `Streams API` allows an application to `act as a stream processor`.
-* The `Connector API` allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems.
+* The **Producer API** allows an application to `publish` a stream of records `to` one or more Kafka `topics`.
+* The **Consumer API** allows an application to `subscribe to` one or more `topics` and `process` the stream of `records` produced to them.
+* The **Streams API** allows an application to `act as a stream processor`.
+* The **Connector API** allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems.
 
 #VSLIDE
 
@@ -32,6 +32,9 @@ Kafka has four core APIs:
 
 `The unit of data within Kafka is called a message.` If you are approaching Kafka from a database background, you can think of this as **similar to a row or a record**.
 
+#VSLIDE
+
+DEMO: Send A Message
 
 #HSLIDE
 
@@ -56,23 +59,29 @@ Note that as a topic generally has multiple partitions, there is `no guarantee o
 
 ![img](images/partitions.png)
 
+#VSLIDE
+
+DEMO: Partition in File System
+
 #HSLIDE
 
 **Producers and Consumers**
 
-`Producers create new messages.` In other publish/subscribe systems, these may be called publishers or writers. In general, a message will be produced to a specific topic. By default, the producer does not care what partition a specific message is written to and will balance messages over all partitions of a topic evenly. In some cases, the producer will direct messages to specific partitions. This is typically done using the message key and a partitioner that will generate a hash of the key and map it to a specific partition. This assures that all messages produced with a given key will get written to the same partition. The producer could also use a custom partitioner that follows other business rules for mapping messages to partitions. Producers are covered in more detail in Chapter 3.
+#VSLIDE
+
+`Producers create new messages.`By default, the producer does not care what partition a specific message is written to and will balance messages over all partitions of a topic evenly. In some cases, the producer will direct messages to specific partitions.
 
 #VSLIDE
 
-`Consumers read messages.` In other publish/subscribe systems, these clients may be called subscribers or readers. The consumer subscribes to one or more topics and reads the messages in the order they were produced. The consumer keeps track of which messages it has already consumed by keeping track of the offset of messages. `The offset is another bit of metadata, an integer value that continually increases, that Kafka adds to each message as it is produced.` Each message within a given partition has a unique offset. By storing the offset of the last consumed message for each partition, either in Zookeeper or in Kafka itself, a consumer can stop and restart without losing its place.
+`Consumers read messages.` The consumer subscribes to one or more topics and reads the messages in the order they were produced. The consumer keeps track of which messages it has already consumed by keeping track of the offset of messages.
 
 #VSLIDE
 
-Consumers work as part of a consumer group. `This is one or more consumers that work together to consume a topic.` The group assures that `each partition is only consumed by one member`. In Figure , there are three consumers in a single group consuming a topic. Two of the consumers are working from one partition each, while the third consumer is working from two partitions. The mapping of a consumer to a partition is often called ownership of the partition by the consumer.
+Consumers work as part of a consumer group. Consumers label themselves with a consumer group name, and `each record published to a topic is delivered to one consumer instance within each subscribing consumer group`.
 
 #VSLIDE
 
-![img](images/consumer.png)
+![img](images/consumer-groups.png)
 
 #HSLIDE
 
@@ -91,11 +100,19 @@ The partitions of the log are distributed over the servers in the Kafka cluster 
 
 #VSLIDE
 
+![img](images/kafka_cluster.png)
+
+#VSLIDE
+
 Each partition has one server which acts as the **leader** and zero or more servers which act as **followers**. The leader handles all read and write requests for the partition while the followers passively replicate the leader. If the leader fails, one of the followers will automatically become the new leader.
 
 #VSLIDE
 
 ![img](images/replication.png)
+
+#VSLIDE
+
+DEMO: Partition in Clusters (2 Ps 2 Bs)
 
 #HSLIDE
 
@@ -108,3 +125,25 @@ At a high-level Kafka gives the following guarantees:
 * For a topic with replication factor N, we will tolerate up to N-1 server failures without losing any records committed to the log.
 
 #HSLIDE
+
+## UseCases
+
+#VSLIDE
+
+**Kafka as a Messaging System**
+Kafka has stronger ordering guarantees than a traditional messaging system.
+
+#VSLIDE
+
+**Kafka as a Storage System**
+Data written to Kafka is written to disk and replicated for fault-tolerance.
+The disk structures Kafka uses scale well—Kafka will perform the same whether you have  `50 KB or 50 TB` of persistent data on the server.
+
+#VSLIDE
+
+**Kafka for Stream Processing**
+In Kafka a stream processor is anything that takes continual streams of data from input topics, performs some processing on this input, and produces continual streams of data to output topics.
+
+#HSLIDE
+
+## END
