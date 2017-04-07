@@ -23,7 +23,7 @@ Kafka has four core APIs:
 * The **Producer API** allows an application to `publish` a stream of records `to` one or more Kafka `topics`.
 * The **Consumer API** allows an application to `subscribe to` one or more `topics` and `process` the stream of `records` produced to them.
 * The **Streams API** allows an application to `act as a stream processor`.
-* The **Connector API** allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems.
+* The **Connector API** allows building and running reusable producers or consumers that connect Kafka topics to applications or systems.
 
 #VSLIDE
 
