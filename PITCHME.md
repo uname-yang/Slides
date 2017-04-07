@@ -3,6 +3,9 @@
 #HSLIDE
 
 It is often described as a **distributed commit log** or more recently a **distributing streaming platform**.
+
+#VSLIDE
+
 Similarly, `data` within Kafka is stored **durably**, **in order**, and can be **read deterministically**. In addition, the data can be **distributed** within the system to provide additional protections against failures, as well as significant opportunities for **scaling** performance.
 
 #VSLIDE
@@ -13,7 +16,7 @@ Similarly, `data` within Kafka is stored **durably**, **in order**, and can be *
 * The Kafka cluster stores streams of records in categories called topics.
 * Each record consists of a key, a value, and a timestamp.
 
-#HSLIDE
+#VSLIDE
 
 Kafka has four core APIs:
 
@@ -53,7 +56,7 @@ For each topic, the Kafka cluster maintains a partitioned log that looks like th
 
 A partition is a single log. Messages are written to it in an **append-only** fashion, and are **read in order** from beginning to end.
 
-Note that as a topic generally has multiple partitions, there is `no guarantee of time-ordering of messages across the entire topic, just within a single partition`.
+Note that as a topic generally has multiple partitions, there is **no guarantee of time-ordering of messages across the entire topic, just within a single partition**.
 
 #VSLIDE
 
@@ -69,15 +72,15 @@ DEMO: Partition in File System
 
 #VSLIDE
 
-`Producers create new messages.`By default, the producer does not care what partition a specific message is written to and will balance messages over all partitions of a topic evenly. In some cases, the producer will direct messages to specific partitions.
+**Producers create new messages.**By default, the producer does not care what partition a specific message is written to and will balance messages over all partitions of a topic evenly. In some cases, the producer will direct messages to specific partitions.
 
 #VSLIDE
 
-`Consumers read messages.` The consumer subscribes to one or more topics and reads the messages in the order they were produced. The consumer keeps track of which messages it has already consumed by keeping track of the offset of messages.
+**Consumers read messages.** The consumer subscribes to one or more topics and reads the messages in the order they were produced. The consumer keeps track of which messages it has already consumed by keeping track of the offset of messages.
 
 #VSLIDE
 
-Consumers work as part of a consumer group. Consumers label themselves with a consumer group name, and `each record published to a topic is delivered to one consumer instance within each subscribing consumer group`.
+Consumers work as part of a consumer group. Consumers label themselves with a consumer group name, and **each record published to a topic is delivered to one consumer instance within each subscribing consumer group**.
 
 #VSLIDE
 
