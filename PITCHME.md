@@ -2,13 +2,35 @@
 
 #HSLIDE
 
-`Apache Kafka` is a `publish/subscribe messaging system` designed to solve this problem. It is often described as a `distributed commit log` or more recently a `distributing streaming platform`. A filesystem or database commit log is designed to provide a durable record of all transactions so that they can be replayed to consistently build the state of a system. Similarly, `data` within Kafka is stored `durably`, `in order`, and can be `read deterministically`. In addition, the data can be `distributed` within the system to provide additional protections against failures, as well as significant opportunities for `scaling` performance.
+It is often described as a **distributed commit log** or more recently a **distributing streaming platform**.
+Similarly, `data` within Kafka is stored **durably**, **in order**, and can be **read deterministically**. In addition, the data can be **distributed** within the system to provide additional protections against failures, as well as significant opportunities for **scaling** performance.
+
+#VSLIDE
+
+A few concepts:
+
+* Kafka is run as a cluster on one or more servers.
+* The Kafka cluster stores streams of records in categories called topics.
+* Each record consists of a key, a value, and a timestamp.
+
+#HSLIDE
+
+Kafka has four core APIs:
+
+* The `Producer API` allows an application to `publish` a stream of records `to` one or more Kafka `topics`.
+* The `Consumer API` allows an application to `subscribe to` one or more `topics` and `process` the stream of `records` produced to them.
+* The `Streams API` allows an application to `act as a stream processor`, consuming an input stream from one or more topics and producing an output stream to one or more output topics, effectively `transforming the input streams to output streams`.
+* The `Connector API` allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems. For example, a connector to a relational database might capture every change to a table.
+
+#VSLIDE
+
+![img](images/kafka-apis.png)
 
 #HSLIDE
 
 **Messages and Batches**
 
-`The unit of data within Kafka is called a message.` If you are approaching Kafka from a database background, you can think of this as `similar to a row or a record`. A message is simply an array of bytes, as far as Kafka is concerned, so the data contained within it does not have a specific format or meaning to Kafka. Messages can have an optional bit of metadata which is referred to as a key. The key is also a byte array, and as with the message, has no specific meaning to Kafka. `Keys are used when messages are to be written to partitions in a more controlled manner.` The simplest such scheme is to treat partitions as a hash ring, and assure that messages with the same key are always written to the same partition.
+`The unit of data within Kafka is called a message.` If you are approaching Kafka from a database background, you can think of this as **similar to a row or a record**.
 
 For efficiency, messages are written into Kafka in batches. A batch is just a collection of messages, all of which are being produced to the same topic and partition.
 
@@ -16,9 +38,22 @@ For efficiency, messages are written into Kafka in batches. A batch is just a co
 
 **Topics and Partitions**
 
-Messages in Kafka are categorized into `topics`. The closest analogy for a topic is a database table, or a folder in a filesystem. `Topics are additionally broken down into a number of partitions.` Going back to the “commit log” description, a partition is a single log. Messages are written to it in an `append-only` fashion, and are `read in order` from beginning to end. Note that as a topic generally has multiple partitions, there is `no guarantee of time-ordering of messages across the entire topic, just within a single partition`. Figure shows a topic with 4 partitions, with writes being appended to the end of each one. `Partitions` are also the way that Kafka `provides` `redundancy and scalability`. Each partition can be hosted on a different server, which means that a single topic can be scaled horizontally across multiple servers to provide for performance far beyond the ability of a single server.
+`A topic is a category or feed name to which records are published.`
+The closest **analogy for a topic is a database table, or a folder in a filesystem**.
 
-#HSLIDE
+#VSLIDE
+
+For each topic, the Kafka cluster maintains a partitioned log that looks like this:
+
+![img](images/log_anatomy.png)
+
+#VSLIDE
+
+A partition is a single log. Messages are written to it in an `append-only` fashion, and are `read in order` from beginning to end.
+
+Note that as a topic generally has multiple partitions, there is `no guarantee of time-ordering of messages across the entire topic, just within a single partition`.
+
+#VSLIDE
 
 ![img](images/partitions.png)
 
@@ -53,3 +88,11 @@ Kafka brokers are designed to operate as part of a cluster. Within a cluster of 
 ![img](images/replication.png)
 
 #HSLIDE
+
+**Guarantees**
+
+At a high-level Kafka gives the following guarantees:
+
+* Messages sent by a producer to a particular topic partition will be appended in the order they are sent.
+* A consumer instance sees records in the order they are stored in the log.
+* For a topic with replication factor N, we will tolerate up to N-1 server failures without losing any records committed to the log.
