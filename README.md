@@ -40,7 +40,7 @@ Note that as a topic generally has multiple partitions, there is **no guarantee 
 
 ![img](images/partitions.png)
 
-**Producers and Consumers**
+## Producers and Consumers
 
 **Producers create new messages.**By default, the producer does not care what partition a specific message is written to and will balance messages over all partitions of a topic evenly. In some cases, the producer will direct messages to specific partitions.
 
@@ -50,17 +50,16 @@ Consumers work as part of a consumer group. Consumers label themselves with a co
 
 ![img](images/consumer-groups.png)
 
-**Brokers and Clusters**
+## Brokers and Clusters
 
 A single Kafka server is called a **broker**.
 
 * The broker **receives messages from producers**, assigns offsets to them, and commits the messages to storage on disk.
 * It also **services consumers**, responding to fetch requests for partitions and responding with the messages that have been committed to disk.
 
+![img](images/kafka_cluster.png)
 
 The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. Each partition is replicated across a configurable number of servers for fault tolerance.
-
-![img](images/kafka_cluster.png)
 
 Each partition has one server which acts as the **leader** and zero or more servers which act as **followers**. The leader handles all read and write requests for the partition while the followers passively replicate the leader. If the leader fails, one of the followers will automatically become the new leader.
 
@@ -77,11 +76,14 @@ At a high-level Kafka gives the following guarantees:
 ## UseCases
 
 **Kafka as a Messaging System**
+
 Kafka has stronger ordering guarantees than a traditional messaging system.
 
 **Kafka as a Storage System**
+
 Data written to Kafka is written to disk and replicated for fault-tolerance.
 The disk structures Kafka uses scale well—Kafka will perform the same whether you have  `50 KB or 50 TB` of persistent data on the server.
 
 **Kafka for Stream Processing**
+
 In Kafka a stream processor is anything that takes continual streams of data from input topics, performs some processing on this input, and produces continual streams of data to output topics.

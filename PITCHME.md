@@ -68,7 +68,7 @@ DEMO: Partition in File System
 
 #HSLIDE
 
-**Producers and Consumers**
+## Producers and Consumers
 
 #VSLIDE
 
@@ -86,9 +86,13 @@ Consumers work as part of a consumer group. Consumers label themselves with a co
 
 ![img](images/consumer-groups.png)
 
+#VSLIDE
+
+DEMO: Publish Subscribe
+
 #HSLIDE
 
-**Brokers and Clusters**
+## Brokers and Clusters
 
 A single Kafka server is called a **broker**.
 
@@ -99,11 +103,11 @@ A single Kafka server is called a **broker**.
 
 #VSLIDE
 
-The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. Each partition is replicated across a configurable number of servers for fault tolerance.
+![img](images/kafka_cluster.png)
 
 #VSLIDE
 
-![img](images/kafka_cluster.png)
+The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. Each partition is replicated across a configurable number of servers for fault tolerance.
 
 #VSLIDE
 
@@ -134,17 +138,20 @@ At a high-level Kafka gives the following guarantees:
 #VSLIDE
 
 **Kafka as a Messaging System**
+
 Kafka has stronger ordering guarantees than a traditional messaging system.
 
 #VSLIDE
 
 **Kafka as a Storage System**
+
 Data written to Kafka is written to disk and replicated for fault-tolerance.
 The disk structures Kafka uses scale well—Kafka will perform the same whether you have  `50 KB or 50 TB` of persistent data on the server.
 
 #VSLIDE
 
 **Kafka for Stream Processing**
+
 In Kafka a stream processor is anything that takes continual streams of data from input topics, performs some processing on this input, and produces continual streams of data to output topics.
 
 #HSLIDE
