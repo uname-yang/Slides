@@ -7,7 +7,7 @@ Similarly, `data` within Kafka is stored **durably**, **in order**, and can be *
 
 #VSLIDE
 
-A few concepts:
+**A few concepts:**
 
 * Kafka is run as a cluster on one or more servers.
 * The Kafka cluster stores streams of records in categories called topics.
@@ -19,8 +19,8 @@ Kafka has four core APIs:
 
 * The `Producer API` allows an application to `publish` a stream of records `to` one or more Kafka `topics`.
 * The `Consumer API` allows an application to `subscribe to` one or more `topics` and `process` the stream of `records` produced to them.
-* The `Streams API` allows an application to `act as a stream processor`, consuming an input stream from one or more topics and producing an output stream to one or more output topics, effectively `transforming the input streams to output streams`.
-* The `Connector API` allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems. For example, a connector to a relational database might capture every change to a table.
+* The `Streams API` allows an application to `act as a stream processor`.
+* The `Connector API` allows building and running reusable producers or consumers that connect Kafka topics to existing applications or data systems.
 
 #VSLIDE
 
@@ -28,15 +28,14 @@ Kafka has four core APIs:
 
 #HSLIDE
 
-**Messages and Batches**
+## Messages
 
 `The unit of data within Kafka is called a message.` If you are approaching Kafka from a database background, you can think of this as **similar to a row or a record**.
 
-For efficiency, messages are written into Kafka in batches. A batch is just a collection of messages, all of which are being produced to the same topic and partition.
 
 #HSLIDE
 
-**Topics and Partitions**
+## Topics and Partitions
 
 `A topic is a category or feed name to which records are published.`
 The closest **analogy for a topic is a database table, or a folder in a filesystem**.
@@ -49,7 +48,7 @@ For each topic, the Kafka cluster maintains a partitioned log that looks like th
 
 #VSLIDE
 
-A partition is a single log. Messages are written to it in an `append-only` fashion, and are `read in order` from beginning to end.
+A partition is a single log. Messages are written to it in an **append-only** fashion, and are **read in order** from beginning to end.
 
 Note that as a topic generally has multiple partitions, there is `no guarantee of time-ordering of messages across the entire topic, just within a single partition`.
 
@@ -63,15 +62,15 @@ Note that as a topic generally has multiple partitions, there is `no guarantee o
 
 `Producers create new messages.` In other publish/subscribe systems, these may be called publishers or writers. In general, a message will be produced to a specific topic. By default, the producer does not care what partition a specific message is written to and will balance messages over all partitions of a topic evenly. In some cases, the producer will direct messages to specific partitions. This is typically done using the message key and a partitioner that will generate a hash of the key and map it to a specific partition. This assures that all messages produced with a given key will get written to the same partition. The producer could also use a custom partitioner that follows other business rules for mapping messages to partitions. Producers are covered in more detail in Chapter 3.
 
-#HSLIDE
+#VSLIDE
 
 `Consumers read messages.` In other publish/subscribe systems, these clients may be called subscribers or readers. The consumer subscribes to one or more topics and reads the messages in the order they were produced. The consumer keeps track of which messages it has already consumed by keeping track of the offset of messages. `The offset is another bit of metadata, an integer value that continually increases, that Kafka adds to each message as it is produced.` Each message within a given partition has a unique offset. By storing the offset of the last consumed message for each partition, either in Zookeeper or in Kafka itself, a consumer can stop and restart without losing its place.
 
-#HSLIDE
+#VSLIDE
 
 Consumers work as part of a consumer group. `This is one or more consumers that work together to consume a topic.` The group assures that `each partition is only consumed by one member`. In Figure , there are three consumers in a single group consuming a topic. Two of the consumers are working from one partition each, while the third consumer is working from two partitions. The mapping of a consumer to a partition is often called ownership of the partition by the consumer.
 
-#HSLIDE
+#VSLIDE
 
 ![img](images/consumer.png)
 
@@ -79,20 +78,33 @@ Consumers work as part of a consumer group. `This is one or more consumers that 
 
 **Brokers and Clusters**
 
-A single Kafka server is called a broker. `The broker receives messages from producers, assigns offsets to them, and commits the messages to storage on disk.` `It also services consumers, responding to fetch requests for partitions and responding with the messages that have been committed to disk.` Depending on the specific hardware and its performance characteristics, a single broker can easily handle thousands of partitions and millions of messages per second.
+A single Kafka server is called a **broker**.
 
-Kafka brokers are designed to operate as part of a cluster. Within a cluster of brokers, one will also function as the cluster `controller` (elected automatically from the live members of the cluster). The controller is responsible for administrative operations, including assigning partitions to brokers and monitoring for broker failures. A partition is owned by a single broker in the cluster, and that broker is called the `leader` for the partition. A partition may be assigned to multiple brokers, which will result in the partition being `replicated` . This provides redundancy of messages in the partition, such that another broker can take over leadership if there is a broker failure. However, all consumers and producers operating on that partition must connect to the leader.
+#VSLIDE
 
-#HSLIDE
+* The broker **receives messages from producers**, assigns offsets to them, and commits the messages to storage on disk.
+* It also **services consumers**, responding to fetch requests for partitions and responding with the messages that have been committed to disk.
+
+#VSLIDE
+
+The partitions of the log are distributed over the servers in the Kafka cluster with each server handling data and requests for a share of the partitions. Each partition is replicated across a configurable number of servers for fault tolerance.
+
+#VSLIDE
+
+Each partition has one server which acts as the **leader** and zero or more servers which act as **followers**. The leader handles all read and write requests for the partition while the followers passively replicate the leader. If the leader fails, one of the followers will automatically become the new leader.
+
+#VSLIDE
 
 ![img](images/replication.png)
 
 #HSLIDE
 
-**Guarantees**
+## Guarantees
 
 At a high-level Kafka gives the following guarantees:
 
 * Messages sent by a producer to a particular topic partition will be appended in the order they are sent.
 * A consumer instance sees records in the order they are stored in the log.
 * For a topic with replication factor N, we will tolerate up to N-1 server failures without losing any records committed to the log.
+
+#HSLIDE
