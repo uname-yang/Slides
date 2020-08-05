@@ -4,6 +4,8 @@
 
 ## 1 Overview
 
+#HSLIDE
+
 - Dashboards
 - Infrastructure
 - Monitors
@@ -66,6 +68,8 @@
 3. Notification Integrations [Slack,Webhooks ...]
 4. Frameworks, Libraries, Trace [Python,Java ...]
 
+#HSLIDE
+
 - <https://docs.datadoghq.com/integrations/amazon_web_services>
 - <https://docs.datadoghq.com/integrations/amazon_ecs/>
 - <https://docs.datadoghq.com/integrations/mysql/>
@@ -83,6 +87,8 @@
 
 The Datadog Agent is software that runs on your hosts. It collects events and metrics from hosts and sends them to Datadog, where you can analyze your monitoring and performance data.
 
+#HSLIDE
+
 ![agent_install](images/10_agent_install.png)
 
 #HSLIDE
@@ -91,7 +97,11 @@ The Datadog Agent is software that runs on your hosts. It collects events and me
 
 > <https://docs.datadoghq.com/tracing/setup/java/>
 
+#HSLIDE
+
 ![instrument](images/11_instrument_application.png)
+
+#HSLIDE
 
 ```bash
 wget -O dd-java-agent.jar 'https://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.datadoghq&a=dd-java-agent&v=LATEST'
@@ -125,7 +135,9 @@ java -javaagent:<DD-JAVA-AGENT-PATH>.jar \
 
 ### Agent Architecture
 
-- <https://github.com/DataDog/dd-agent/wiki>
+> <https://github.com/DataDog/dd-agent/wiki>
+
+#HSLIDE
 
 ![agent_architecture](images/12_agent_architecture.png)
 
