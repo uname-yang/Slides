@@ -147,7 +147,9 @@ java -javaagent:<DD-JAVA-AGENT-PATH>.jar \
 
 > Using data you have collected
 
-> example: Dashboard
+#HSLIDE
+
+### example: Dashboard
 
 #HSLIDE
 
@@ -155,7 +157,9 @@ java -javaagent:<DD-JAVA-AGENT-PATH>.jar \
 
 > Monitors can also be thought of as alerts nand notifications.
 
-> example: Monitors
+#HSLIDE
+
+### example: Monitors
 
 #HSLIDE
 
